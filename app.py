@@ -18,7 +18,6 @@ st.header("Transaction Details")
 
 def user_input_features():
     amount = st.number_input('Amount', min_value=0.0, max_value=10000.0, value=0.0)
-    time = st.number_input('Time', min_value=0, max_value=172800, value=0)
     v1 = st.number_input('V1', min_value=-100.0, max_value=100.0, value=0.0)
     v2 = st.number_input('V2', min_value=-100.0, max_value=100.0, value=0.0)
     v3 = st.number_input('V3', min_value=-100.0, max_value=100.0, value=0.0)
