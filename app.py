@@ -51,7 +51,7 @@ def user_input_features():
         'Amount': amount
     }
     features = pd.DataFrame(data, index=[0])
-    return features
+    return features 
 
 input_df = user_input_features()
 
