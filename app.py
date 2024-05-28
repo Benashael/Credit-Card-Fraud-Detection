@@ -7,6 +7,11 @@ st.set_page_config(page_title="Credit Card Fraud Detection", page_icon="💳")
 
 st.title("Credit Card Fraud Detection 💳")
 
+# Display the dataset
+st.header("Credit Card Dataset")
+df = pd.read_csv("creditcard_trimmed.csv")
+st.write(df)
+
 # Load the pre-trained model
 model = joblib.load('credit_card_fraud_model.pkl')
 
