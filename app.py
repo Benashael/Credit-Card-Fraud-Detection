@@ -66,6 +66,3 @@ if st.button("Detect"):
     st.subheader('Prediction')
     fraud_status = "**Fraud**" if prediction[0] == 1 else "**Not Fraud**"
     st.write(fraud_status)
-    
-    st.subheader('Prediction Probability')
-    st.write(prediction_proba)
