@@ -45,11 +45,10 @@ def user_input_features():
     # Add more inputs for all features as needed
 
     data = {
-        'Amount': amount,
         'V1': v1,
         'V2': v2,
         'V3': v3,
-        # Add more features as needed
+        'Amount': amount
     }
     features = pd.DataFrame(data, index=[0])
     return features
