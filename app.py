@@ -1,25 +1,41 @@
 import streamlit as st
 import pandas as pd
-import joblib  # To load the pre-trained model
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 
 st.set_page_config(page_title="Credit Card Fraud Detection", page_icon="💳")
 
 st.title("Credit Card Fraud Detection 💳")
 
+# Load the trimmed dataset for display
+df_1 = pd.read_csv("creditcard_trimmed.csv")
+
 # Display the dataset
 st.header("Credit Card Dataset")
-df = pd.read_csv("creditcard_trimmed.csv")
-st.write(df)
+st.write(df_1)
 
-# Load the pre-trained model
-model = joblib.load('credit_card_fraud_model.pkl')
+df = pd.read_csv("creditcard.csv")
 
-# Load the scaler used during training
-scaler = joblib.load('scaler.pkl')
+# Prepare the data
+X = df.drop('Class', axis=1)
+y = df['Class']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create a pipeline with a scaler and a classifier
+pipeline = Pipeline([
+    ('scaler', StandardScaler()),
+    ('classifier', RandomForestClassifier())
+])
+
+# Train the model
+pipeline.fit(X_train, y_train)
 
 # Sidebar inputs for user features
-st.header("Transaction Details")
+st.header("User Input Features")
 
 def user_input_features():
     amount = st.number_input('Amount', min_value=0.0, max_value=10000.0, value=0.0)
@@ -45,11 +61,11 @@ st.subheader('User Input Parameters')
 st.write(input_df)
 
 # Preprocess the input features
-input_df_scaled = scaler.transform(input_df)
+input_df_scaled = pipeline.named_steps['scaler'].transform(input_df)
 
 # Make predictions
-prediction = model.predict(input_df_scaled)
-prediction_proba = model.predict_proba(input_df_scaled)
+prediction = pipeline.named_steps['classifier'].predict(input_df_scaled)
+prediction_proba = pipeline.named_steps['classifier'].predict_proba(input_df_scaled)
 
 st.subheader('Prediction')
 fraud_status = "**Fraud**" if prediction[0] == 1 else "**Not Fraud**"
