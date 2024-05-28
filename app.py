@@ -25,7 +25,6 @@ def user_input_features():
 
     data = {
         'Amount': amount,
-        'Time': time,
         'V1': v1,
         'V2': v2,
         'V3': v3,
