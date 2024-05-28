@@ -55,20 +55,17 @@ def user_input_features():
 
 input_df = user_input_features()
 
-# Display the user inputs
-st.subheader('User Input Parameters')
-st.write(input_df)
-
 # Preprocess the input features
 input_df_scaled = pipeline.named_steps['scaler'].transform(input_df)
 
-# Make predictions
-prediction = pipeline.named_steps['classifier'].predict(input_df_scaled)
-prediction_proba = pipeline.named_steps['classifier'].predict_proba(input_df_scaled)
-
-st.subheader('Prediction')
-fraud_status = "**Fraud**" if prediction[0] == 1 else "**Not Fraud**"
-st.write(fraud_status)
-
-st.subheader('Prediction Probability')
-st.write(prediction_proba)
+if st.button("Detect"):
+    # Make predictions
+    prediction = pipeline.named_steps['classifier'].predict(input_df_scaled)
+    prediction_proba = pipeline.named_steps['classifier'].predict_proba(input_df_scaled)
+    
+    st.subheader('Prediction')
+    fraud_status = "**Fraud**" if prediction[0] == 1 else "**Not Fraud**"
+    st.write(fraud_status)
+    
+    st.subheader('Prediction Probability')
+    st.write(prediction_proba)
